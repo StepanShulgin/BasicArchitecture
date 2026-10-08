@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="wizard_title_personal">Расскажите о себе</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="birthday">Дата рождения (ДД.ММ.ГГГГ)</string>
+    <string name="wizard_title_address">Где вы живёте?</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="address">Улица и дом</string>
+    <string name="wizard_title_interests">Что вам интересно?</string>
+    <string name="wizard_title_summary">Ваша анкета</string>
+    <string name="next">Далее</string>
+    <string name="finish">Готово</string>
+    <string name="invalid_personal_info">Проверьте имя, фамилию и дату рождения. Возраст должен быть не менее 18 лет.</string>
+    <string name="profile_summary">Имя: %1$s\nФамилия: %2$s\nДата рождения: %3$s\nСтрана: %4$s\nГород: %5$s\nАдрес: %6$s\nИнтересы: %7$s</string>
 </resources>
