@@ -3,7 +3,15 @@ package ru.otus.basicarchitecture
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +30,42 @@ class PersonalInfoViewModel @Inject constructor(private val cache: WizardCache) 
 }
 
 @HiltViewModel
-class AddressViewModel @Inject constructor(private val cache: WizardCache) : ViewModel() {
-    fun save(country: String, city: String, address: String) = cache.saveAddress(country.trim(), city.trim(), address.trim())
+class AddressViewModel @Inject constructor(
+    private val cache: WizardCache,
+    private val repository: AddressSuggestionRepository
+) : ViewModel() {
+    private val _suggestions = MutableStateFlow<AddressSuggestionState>(AddressSuggestionState.Idle)
+    val suggestions: StateFlow<AddressSuggestionState> = _suggestions.asStateFlow()
+    private var searchJob: Job? = null
+
+    fun search(query: String) {
+        searchJob?.cancel()
+        if (query.trim().length < MIN_QUERY_LENGTH) {
+            _suggestions.value = AddressSuggestionState.Idle
+            return
+        }
+
+        searchJob = viewModelScope.launch {
+            _suggestions.value = AddressSuggestionState.Loading
+            delay(SEARCH_DEBOUNCE_MS)
+            try {
+                _suggestions.value = AddressSuggestionState.Success(repository.search(query.trim()))
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (_: IllegalStateException) {
+                _suggestions.value = AddressSuggestionState.Error(AddressSuggestionError.MISSING_API_KEY)
+            } catch (_: Exception) {
+                _suggestions.value = AddressSuggestionState.Error(AddressSuggestionError.NETWORK)
+            }
+        }
+    }
+
+    fun save(address: String) = cache.saveAddress(address.trim())
+
+    private companion object {
+        const val MIN_QUERY_LENGTH = 3
+        const val SEARCH_DEBOUNCE_MS = 350L
+    }
 }
 
 @HiltViewModel

@@ -4,9 +4,14 @@
         android:orientation="vertical" android:padding="24dp">
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="@string/wizard_title_address" android:textAppearance="?attr/textAppearanceHeadlineSmall" android:paddingBottom="16dp" />
-        <EditText android:id="@+id/country" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/country" />
-        <EditText android:id="@+id/city" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/city" />
-        <EditText android:id="@+id/address" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/address" />
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView android:id="@+id/addressInput" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:hint="@string/address_hint" android:inputType="textPostalAddress" android:completionThreshold="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <ProgressBar android:id="@+id/addressProgress" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" android:visibility="gone" />
+        <TextView android:id="@+id/addressStatus" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingTop="8dp" android:textAppearance="?attr/textAppearanceBodyMedium" />
         <com.google.android.material.button.MaterialButton android:id="@+id/nextButton"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/next" android:layout_marginTop="16dp" />
     </LinearLayout>

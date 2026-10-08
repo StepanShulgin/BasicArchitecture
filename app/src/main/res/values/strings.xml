@@ -5,13 +5,12 @@
     <string name="last_name">Фамилия</string>
     <string name="birthday">Дата рождения (ДД.ММ.ГГГГ)</string>
     <string name="wizard_title_address">Где вы живёте?</string>
-    <string name="country">Страна</string>
-    <string name="city">Город</string>
-    <string name="address">Улица и дом</string>
     <string name="wizard_title_interests">Что вам интересно?</string>
     <string name="wizard_title_summary">Ваша анкета</string>
     <string name="next">Далее</string>
-    <string name="finish">Готово</string>
-    <string name="invalid_personal_info">Проверьте имя, фамилию и дату рождения. Возраст должен быть не менее 18 лет.</string>
-    <string name="profile_summary">Имя: %1$s\nФамилия: %2$s\nДата рождения: %3$s\nСтрана: %4$s\nГород: %5$s\nАдрес: %6$s\nИнтересы: %7$s</string>
+    <string name="profile_summary">Имя: %1$s\nФамилия: %2$s\nДата рождения: %3$s\nАдрес: %4$s\nИнтересы: %5$s</string>
+    <string name="address_hint">Город, улица и дом</string>
+    <string name="address_empty">Подходящие адреса не найдены</string>
+    <string name="dadata_key_missing">Добавьте DADATA_API_KEY в local.properties</string>
+    <string name="address_suggestions_error">Не удалось загрузить подсказки. Проверьте подключение и повторите ввод.</string>
 </resources>

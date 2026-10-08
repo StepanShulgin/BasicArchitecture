@@ -21,8 +21,6 @@ class SummaryFragment : Fragment(R.layout.fragment_summary) {
             profile.firstName,
             profile.lastName,
             profile.birthday,
-            profile.country,
-            profile.city,
             profile.address,
             profile.interests.joinToString().ifEmpty { "—" }
         )

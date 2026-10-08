@@ -5,6 +5,13 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def daDataApiKey = localProperties.getProperty('DADATA_API_KEY', '')
+
 android {
     namespace 'ru.otus.basicarchitecture'
     compileSdk 35
@@ -15,6 +22,7 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'DADATA_API_KEY', '"' + daDataApiKey.replace('\\', '\\\\').replace('"', '\\"') + '"'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,7 +42,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
+
 }
 
 dependencies {
@@ -46,6 +56,9 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.8.5'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.7'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.12.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.12.0'
     implementation 'com.google.dagger:hilt-android:2.52'
     kapt 'com.google.dagger:hilt-compiler:2.52'
     testImplementation 'junit:junit:4.13.2'
