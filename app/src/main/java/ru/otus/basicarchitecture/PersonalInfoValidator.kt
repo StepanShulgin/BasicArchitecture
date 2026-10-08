@@ -4,9 +4,11 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
+import java.time.format.ResolverStyle
 
 object PersonalInfoValidator {
     private val birthdayFormatter = DateTimeFormatter.ofPattern("dd.MM.uuuu")
+        .withResolverStyle(ResolverStyle.STRICT)
 
     fun isValid(firstName: String, lastName: String, birthday: String, today: LocalDate = LocalDate.now()): Boolean {
         if (firstName.isBlank() || lastName.isBlank()) return false

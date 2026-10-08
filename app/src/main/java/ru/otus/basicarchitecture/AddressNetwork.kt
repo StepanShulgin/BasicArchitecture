@@ -1,5 +1,6 @@
 package ru.otus.basicarchitecture
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,11 +31,27 @@ interface DaDataApi {
     suspend fun suggestAddress(@Body request: AddressSuggestionRequest): AddressSuggestionResponse
 }
 
-class AddressSuggestionRepository @Inject constructor(private val api: DaDataApi) {
-    suspend fun search(query: String): List<AddressSuggestion> {
+interface AddressSuggestionsDataSource {
+    suspend fun search(query: String): List<AddressSuggestion>
+}
+
+class AddressSuggestionRepository @Inject constructor(
+    private val api: DaDataApi
+) : AddressSuggestionsDataSource {
+    override suspend fun search(query: String): List<AddressSuggestion> {
         check(BuildConfig.DADATA_API_KEY.isNotBlank()) { "DaData API key is not configured" }
         return api.suggestAddress(AddressSuggestionRequest(query)).suggestions
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class AddressSuggestionDataSourceModule {
+    @Binds
+    @Singleton
+    abstract fun bindAddressSuggestionsDataSource(
+        repository: AddressSuggestionRepository
+    ): AddressSuggestionsDataSource
 }
 
 @Module

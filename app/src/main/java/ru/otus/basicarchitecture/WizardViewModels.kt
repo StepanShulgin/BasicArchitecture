@@ -32,7 +32,7 @@ class PersonalInfoViewModel @Inject constructor(private val cache: WizardCache) 
 @HiltViewModel
 class AddressViewModel @Inject constructor(
     private val cache: WizardCache,
-    private val repository: AddressSuggestionRepository
+    private val repository: AddressSuggestionsDataSource
 ) : ViewModel() {
     private val _suggestions = MutableStateFlow<AddressSuggestionState>(AddressSuggestionState.Idle)
     val suggestions: StateFlow<AddressSuggestionState> = _suggestions.asStateFlow()

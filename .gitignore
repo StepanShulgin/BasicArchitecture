@@ -13,6 +13,7 @@ build
 .externalNativeBuild
 .idea
 .kotlintest
+.kotlin/
 run.sh
 *.idea
 *.lock
