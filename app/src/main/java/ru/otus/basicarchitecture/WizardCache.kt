@@ -7,8 +7,6 @@ data class WizardProfile(
     val firstName: String = "",
     val lastName: String = "",
     val birthday: String = "",
-    val country: String = "",
-    val city: String = "",
     val address: String = "",
     val interests: Set<String> = emptySet()
 )
@@ -22,8 +20,8 @@ class WizardCache @Inject constructor() {
         profile = profile.copy(firstName = firstName, lastName = lastName, birthday = birthday)
     }
 
-    fun saveAddress(country: String, city: String, address: String) {
-        profile = profile.copy(country = country, city = city, address = address)
+    fun saveAddress(address: String) {
+        profile = profile.copy(address = address)
     }
 
     fun saveInterests(interests: Set<String>) {
